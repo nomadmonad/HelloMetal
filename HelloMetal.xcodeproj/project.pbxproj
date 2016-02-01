@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		8D675ECC1C59FB67006C02D6 /* StaticVarReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D675ECB1C59FB67006C02D6 /* StaticVarReference.swift */; };
+		8DB2209B1C5F0ED600AD8859 /* Matrix4.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DB2209A1C5F0ED600AD8859 /* Matrix4.m */; };
 		8DFBC5431C58BFC300B110A9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DFBC5421C58BFC300B110A9 /* AppDelegate.swift */; };
 		8DFBC5451C58BFC300B110A9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DFBC5441C58BFC300B110A9 /* ViewController.swift */; };
 		8DFBC5481C58BFC300B110A9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8DFBC5461C58BFC300B110A9 /* Main.storyboard */; };
@@ -19,6 +20,9 @@
 
 /* Begin PBXFileReference section */
 		8D675ECB1C59FB67006C02D6 /* StaticVarReference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StaticVarReference.swift; sourceTree = "<group>"; };
+		8DB220981C5F0ED600AD8859 /* HelloMetal-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "HelloMetal-Bridging-Header.h"; sourceTree = "<group>"; };
+		8DB220991C5F0ED600AD8859 /* Matrix4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Matrix4.h; sourceTree = "<group>"; };
+		8DB2209A1C5F0ED600AD8859 /* Matrix4.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Matrix4.m; sourceTree = "<group>"; };
 		8DFBC53F1C58BFC200B110A9 /* HelloMetal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloMetal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8DFBC5421C58BFC300B110A9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8DFBC5441C58BFC300B110A9 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -62,6 +66,8 @@
 		8DFBC5411C58BFC300B110A9 /* HelloMetal */ = {
 			isa = PBXGroup;
 			children = (
+				8DB220991C5F0ED600AD8859 /* Matrix4.h */,
+				8DB2209A1C5F0ED600AD8859 /* Matrix4.m */,
 				8DFBC5421C58BFC300B110A9 /* AppDelegate.swift */,
 				8DFBC5441C58BFC300B110A9 /* ViewController.swift */,
 				8DFBC5461C58BFC300B110A9 /* Main.storyboard */,
@@ -70,6 +76,7 @@
 				8DFBC54E1C58BFC300B110A9 /* Info.plist */,
 				8DFBC5561C58C29F00B110A9 /* Shaders.metal */,
 				8D675ECB1C59FB67006C02D6 /* StaticVarReference.swift */,
+				8DB220981C5F0ED600AD8859 /* HelloMetal-Bridging-Header.h */,
 			);
 			path = HelloMetal;
 			sourceTree = "<group>";
@@ -146,6 +153,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				8DFBC5571C58C29F00B110A9 /* Shaders.metal in Sources */,
+				8DB2209B1C5F0ED600AD8859 /* Matrix4.m in Sources */,
 				8DFBC5451C58BFC300B110A9 /* ViewController.swift in Sources */,
 				8DFBC5431C58BFC300B110A9 /* AppDelegate.swift in Sources */,
 				8D675ECC1C59FB67006C02D6 /* StaticVarReference.swift in Sources */,
@@ -261,10 +269,13 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = HelloMetal/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = local.HelloMetal;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "HelloMetal/HelloMetal-Bridging-Header.h";
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
 		};
@@ -272,10 +283,12 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CLANG_ENABLE_MODULES = YES;
 				INFOPLIST_FILE = HelloMetal/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = local.HelloMetal;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "HelloMetal/HelloMetal-Bridging-Header.h";
 			};
 			name = Release;
 		};
