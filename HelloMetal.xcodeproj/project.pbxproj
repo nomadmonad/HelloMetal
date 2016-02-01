@@ -7,14 +7,18 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8D675ECC1C59FB67006C02D6 /* StaticVarReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D675ECB1C59FB67006C02D6 /* StaticVarReference.swift */; };
 		8DFBC5431C58BFC300B110A9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DFBC5421C58BFC300B110A9 /* AppDelegate.swift */; };
 		8DFBC5451C58BFC300B110A9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DFBC5441C58BFC300B110A9 /* ViewController.swift */; };
 		8DFBC5481C58BFC300B110A9 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8DFBC5461C58BFC300B110A9 /* Main.storyboard */; };
 		8DFBC54A1C58BFC300B110A9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 8DFBC5491C58BFC300B110A9 /* Assets.xcassets */; };
 		8DFBC54D1C58BFC300B110A9 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 8DFBC54B1C58BFC300B110A9 /* LaunchScreen.storyboard */; };
+		8DFBC5551C58C04500B110A9 /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8DFBC5541C58C04500B110A9 /* QuartzCore.framework */; };
+		8DFBC5571C58C29F00B110A9 /* Shaders.metal in Sources */ = {isa = PBXBuildFile; fileRef = 8DFBC5561C58C29F00B110A9 /* Shaders.metal */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8D675ECB1C59FB67006C02D6 /* StaticVarReference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StaticVarReference.swift; sourceTree = "<group>"; };
 		8DFBC53F1C58BFC200B110A9 /* HelloMetal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = HelloMetal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8DFBC5421C58BFC300B110A9 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		8DFBC5441C58BFC300B110A9 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -22,6 +26,8 @@
 		8DFBC5491C58BFC300B110A9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		8DFBC54C1C58BFC300B110A9 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		8DFBC54E1C58BFC300B110A9 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		8DFBC5541C58C04500B110A9 /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		8DFBC5561C58C29F00B110A9 /* Shaders.metal */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.metal; path = Shaders.metal; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -29,6 +35,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8DFBC5551C58C04500B110A9 /* QuartzCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -38,6 +45,7 @@
 		8DFBC5361C58BFC200B110A9 = {
 			isa = PBXGroup;
 			children = (
+				8DFBC5541C58C04500B110A9 /* QuartzCore.framework */,
 				8DFBC5411C58BFC300B110A9 /* HelloMetal */,
 				8DFBC5401C58BFC300B110A9 /* Products */,
 			);
@@ -60,6 +68,8 @@
 				8DFBC5491C58BFC300B110A9 /* Assets.xcassets */,
 				8DFBC54B1C58BFC300B110A9 /* LaunchScreen.storyboard */,
 				8DFBC54E1C58BFC300B110A9 /* Info.plist */,
+				8DFBC5561C58C29F00B110A9 /* Shaders.metal */,
+				8D675ECB1C59FB67006C02D6 /* StaticVarReference.swift */,
 			);
 			path = HelloMetal;
 			sourceTree = "<group>";
@@ -135,8 +145,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				8DFBC5571C58C29F00B110A9 /* Shaders.metal in Sources */,
 				8DFBC5451C58BFC300B110A9 /* ViewController.swift in Sources */,
 				8DFBC5431C58BFC300B110A9 /* AppDelegate.swift in Sources */,
+				8D675ECC1C59FB67006C02D6 /* StaticVarReference.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -286,6 +298,7 @@
 				8DFBC5531C58BFC300B110A9 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
