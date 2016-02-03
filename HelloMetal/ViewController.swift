@@ -27,11 +27,6 @@ class ViewController: UIViewController {
         view.layer.addSublayer(metalLayer)
         
         objectToDraw = Cube(device: device)
-        objectToDraw.positionX = 0.0
-        objectToDraw.positionY = 0.0
-        objectToDraw.positionZ = -2.0
-        objectToDraw.rotationZ = Matrix4.degreesToRad(45)
-        objectToDraw.scale = 0.5
         
         let defaultLibrary = device.newDefaultLibrary()
         let fragmentProgram = defaultLibrary!.newFunctionWithName("basic_fragment")
@@ -59,7 +54,9 @@ class ViewController: UIViewController {
     func render() {
         let drawable: CAMetalDrawable? = metalLayer.nextDrawable()
         
-        objectToDraw.render(commandQueue, pipelineState: pipelineState, drawable: drawable!, projectionMatrix: projectionMatrix, clearColor: nil)
+        let worldModelMatrix = Matrix4()
+        worldModelMatrix.translate(0.0, y: 0.0, z: -7.0)
+        objectToDraw.render(commandQueue, pipelineState: pipelineState, drawable: drawable!, parentModelViewMatrix: worldModelMatrix, projectionMatrix: projectionMatrix, clearColor: nil)
     }
     
     func gameloop() {

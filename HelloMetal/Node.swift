@@ -32,7 +32,7 @@ class Node {
         self.vertexCount = vertices.count
     }
     
-    func render(commandQueue: MTLCommandQueue, pipelineState: MTLRenderPipelineState, drawable: CAMetalDrawable, projectionMatrix: Matrix4, clearColor: MTLClearColor?) {
+    func render(commandQueue: MTLCommandQueue, pipelineState: MTLRenderPipelineState, drawable: CAMetalDrawable, parentModelViewMatrix: Matrix4, projectionMatrix: Matrix4, clearColor: MTLClearColor?) {
         
         let renderPassDescriptor = MTLRenderPassDescriptor()
         renderPassDescriptor.colorAttachments[0].texture = drawable.texture
@@ -48,6 +48,7 @@ class Node {
             renderEncoder.setVertexBuffer(vertexBuffer, offset: 0, atIndex: 0)
 
             let nodeModelMatrix = self.modelMatrix()
+            nodeModelMatrix.multiplyLeft(parentModelViewMatrix)
             uniformBuffer = device.newBufferWithLength(sizeof(Float) * Matrix4.numberOfElements() * 2, options: MTLResourceOptions.CPUCacheModeDefaultCache)
             let bufferPointer = uniformBuffer?.contents()
             memcpy(bufferPointer!, nodeModelMatrix.raw(), sizeof(Float) * Matrix4.numberOfElements())
