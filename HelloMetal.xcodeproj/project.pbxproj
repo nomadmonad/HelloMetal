@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		5FA675BB1C62422C00AFCCF5 /* Cube.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5FA675BA1C62422C00AFCCF5 /* Cube.swift */; };
+		5FA675BD1C6242ED00AFCCF5 /* GLKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FA675BC1C6242ED00AFCCF5 /* GLKit.framework */; };
 		8D266FAA1C605FD30056453E /* Vertex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D266FA91C605FD30056453E /* Vertex.swift */; };
 		8D266FAC1C6060240056453E /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D266FAB1C6060240056453E /* Node.swift */; };
 		8D58B0841C61791100793007 /* Triangle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D58B0831C61791100793007 /* Triangle.swift */; };
@@ -21,6 +23,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		5FA675BA1C62422C00AFCCF5 /* Cube.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Cube.swift; sourceTree = "<group>"; };
+		5FA675BC1C6242ED00AFCCF5 /* GLKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = GLKit.framework; path = System/Library/Frameworks/GLKit.framework; sourceTree = SDKROOT; };
 		8D266FA91C605FD30056453E /* Vertex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vertex.swift; sourceTree = "<group>"; };
 		8D266FAB1C6060240056453E /* Node.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
 		8D58B0831C61791100793007 /* Triangle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Triangle.swift; sourceTree = "<group>"; };
@@ -43,6 +47,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5FA675BD1C6242ED00AFCCF5 /* GLKit.framework in Frameworks */,
 				8DFBC5551C58C04500B110A9 /* QuartzCore.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -53,6 +58,7 @@
 		8DFBC5361C58BFC200B110A9 = {
 			isa = PBXGroup;
 			children = (
+				5FA675BC1C6242ED00AFCCF5 /* GLKit.framework */,
 				8DFBC5541C58C04500B110A9 /* QuartzCore.framework */,
 				8DFBC5411C58BFC300B110A9 /* HelloMetal */,
 				8DFBC5401C58BFC300B110A9 /* Products */,
@@ -83,6 +89,7 @@
 				8D266FA91C605FD30056453E /* Vertex.swift */,
 				8D266FAB1C6060240056453E /* Node.swift */,
 				8D58B0831C61791100793007 /* Triangle.swift */,
+				5FA675BA1C62422C00AFCCF5 /* Cube.swift */,
 			);
 			path = HelloMetal;
 			sourceTree = "<group>";
@@ -161,6 +168,7 @@
 			files = (
 				8DFBC5571C58C29F00B110A9 /* Shaders.metal in Sources */,
 				8DB2209B1C5F0ED600AD8859 /* Matrix4.m in Sources */,
+				5FA675BB1C62422C00AFCCF5 /* Cube.swift in Sources */,
 				8DFBC5451C58BFC300B110A9 /* ViewController.swift in Sources */,
 				8DFBC5431C58BFC300B110A9 /* AppDelegate.swift in Sources */,
 				8D266FAA1C605FD30056453E /* Vertex.swift in Sources */,

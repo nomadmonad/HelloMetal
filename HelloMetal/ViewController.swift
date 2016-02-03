@@ -9,7 +9,7 @@ class ViewController: UIViewController {
     var pipelineState: MTLRenderPipelineState! = nil
     var commandQueue: MTLCommandQueue! = nil
     var timer: CADisplayLink! = nil
-    var objectToDraw: Triangle! = nil
+    var objectToDraw: Cube! = nil
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,7 +22,10 @@ class ViewController: UIViewController {
         metalLayer.frame = view.layer.frame
         view.layer.addSublayer(metalLayer)
         
-        objectToDraw = Triangle(device: device)
+        objectToDraw = Cube(device: device)
+        objectToDraw.positionX = -0.25
+        objectToDraw.rotationZ = Matrix4.degreesToRad(45)
+        objectToDraw.scale = 0.5
         
         let defaultLibrary = device.newDefaultLibrary()
         let fragmentProgram = defaultLibrary!.newFunctionWithName("basic_fragment")

@@ -6,7 +6,17 @@ class Node {
     let name: String
     var vertexCount: Int
     var vertexBuffer: MTLBuffer
+    var uniformBuffer: MTLBuffer?
     var device: MTLDevice
+
+    var positionX: Float = 0.0
+    var positionY: Float = 0.0
+    var positionZ: Float = 0.0
+
+    var rotationX: Float = 0.0
+    var rotationY: Float = 0.0
+    var rotationZ: Float = 0.0
+    var scale: Float = 1.0
 
     init(name: String, vertices: Array<Vertex>, device: MTLDevice) {
         var vertexData = Array<Float>()
@@ -36,11 +46,26 @@ class Node {
         if let renderEncoder: MTLRenderCommandEncoder = renderEncoderOpt {
             renderEncoder.setRenderPipelineState(pipelineState)
             renderEncoder.setVertexBuffer(vertexBuffer, offset: 0, atIndex: 0)
+            
+            let nodeModelMatrix = self.modelMatrix()
+            uniformBuffer = device.newBufferWithLength(sizeof(Float) * Matrix4.numberOfElements(), options: MTLResourceOptions.CPUCacheModeDefaultCache)
+            let bufferPointer = uniformBuffer?.contents()
+            memcpy(bufferPointer!, nodeModelMatrix.raw(), sizeof(Float) * Matrix4.numberOfElements())
+            renderEncoder.setVertexBuffer(self.uniformBuffer, offset: 0, atIndex: 1)
+            
             renderEncoder.drawPrimitives(.Triangle, vertexStart: 0, vertexCount: vertexCount, instanceCount: vertexCount/3)
             renderEncoder.endEncoding()
         }
         
         commandBuffer.presentDrawable(drawable)
         commandBuffer.commit()
+    }
+    
+    func modelMatrix() -> Matrix4 {
+        let matrix = Matrix4()
+        matrix.translate(positionX, y: positionY, z: positionZ)
+        matrix.rotateAroundX(rotationX, y: rotationY, z: rotationZ)
+        matrix.scale(scale, y: scale, z: scale)
+        return matrix
     }
 }
