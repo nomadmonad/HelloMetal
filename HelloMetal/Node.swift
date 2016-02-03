@@ -17,6 +17,8 @@ class Node {
     var rotationY: Float = 0.0
     var rotationZ: Float = 0.0
     var scale: Float = 1.0
+    
+    var time: CFTimeInterval = 0.0
 
     init(name: String, vertices: Array<Vertex>, device: MTLDevice) {
         var vertexData = Array<Float>()
@@ -69,5 +71,9 @@ class Node {
         matrix.rotateAroundX(rotationX, y: rotationY, z: rotationZ)
         matrix.scale(scale, y: scale, z: scale)
         return matrix
+    }
+    
+    func updateWithDelta(delta: CFTimeInterval) {
+        time += delta
     }
 }

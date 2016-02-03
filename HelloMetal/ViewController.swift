@@ -12,7 +12,9 @@ class ViewController: UIViewController {
     var objectToDraw: Cube! = nil
 
     var projectionMatrix: Matrix4!
-    
+
+    var lastFrameTimestamp: CFTimeInterval = 0.0
+
     override func viewDidLoad() {
         super.viewDidLoad()
 
@@ -41,7 +43,7 @@ class ViewController: UIViewController {
         
         commandQueue = device.newCommandQueue()
 
-        timer = CADisplayLink(target: self, selector: Selector("gameloop"))
+        timer = CADisplayLink(target: self, selector: Selector("newFrame:"))
         timer.addToRunLoop(NSRunLoop.mainRunLoop(), forMode: NSDefaultRunLoopMode)        
     }
 
@@ -59,10 +61,22 @@ class ViewController: UIViewController {
         objectToDraw.render(commandQueue, pipelineState: pipelineState, drawable: drawable!, parentModelViewMatrix: worldModelMatrix, projectionMatrix: projectionMatrix, clearColor: nil)
     }
     
-    func gameloop() {
+    func gameloop(timeSinceLastUpdate: CFTimeInterval) {
+        objectToDraw.updateWithDelta(timeSinceLastUpdate)
         autoreleasepool {
             self.render()
         }
+    }
+
+    func newFrame(displayLink: CADisplayLink) {
+        if lastFrameTimestamp == 0.0 {
+            lastFrameTimestamp = displayLink.timestamp
+        }
+        
+        let elapsed: CFTimeInterval = displayLink.timestamp - lastFrameTimestamp
+        lastFrameTimestamp = displayLink.timestamp
+        
+        gameloop(elapsed)
     }
 }
 
