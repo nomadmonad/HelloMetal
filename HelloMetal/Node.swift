@@ -32,7 +32,7 @@ class Node {
         self.vertexCount = vertices.count
     }
     
-    func render(commandQueue: MTLCommandQueue, pipelineState: MTLRenderPipelineState, drawable: CAMetalDrawable, clearColor: MTLClearColor?) {
+    func render(commandQueue: MTLCommandQueue, pipelineState: MTLRenderPipelineState, drawable: CAMetalDrawable, projectionMatrix: Matrix4, clearColor: MTLClearColor?) {
         
         let renderPassDescriptor = MTLRenderPassDescriptor()
         renderPassDescriptor.colorAttachments[0].texture = drawable.texture
@@ -46,11 +46,12 @@ class Node {
         if let renderEncoder: MTLRenderCommandEncoder = renderEncoderOpt {
             renderEncoder.setRenderPipelineState(pipelineState)
             renderEncoder.setVertexBuffer(vertexBuffer, offset: 0, atIndex: 0)
-            
+
             let nodeModelMatrix = self.modelMatrix()
-            uniformBuffer = device.newBufferWithLength(sizeof(Float) * Matrix4.numberOfElements(), options: MTLResourceOptions.CPUCacheModeDefaultCache)
+            uniformBuffer = device.newBufferWithLength(sizeof(Float) * Matrix4.numberOfElements() * 2, options: MTLResourceOptions.CPUCacheModeDefaultCache)
             let bufferPointer = uniformBuffer?.contents()
             memcpy(bufferPointer!, nodeModelMatrix.raw(), sizeof(Float) * Matrix4.numberOfElements())
+            memcpy(bufferPointer! + sizeof(Float) * Matrix4.numberOfElements(), projectionMatrix.raw(), sizeof(Float) * Matrix4.numberOfElements())
             renderEncoder.setVertexBuffer(self.uniformBuffer, offset: 0, atIndex: 1)
             
             renderEncoder.drawPrimitives(.Triangle, vertexStart: 0, vertexCount: vertexCount, instanceCount: vertexCount/3)
