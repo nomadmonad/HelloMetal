@@ -46,6 +46,7 @@ class Node {
         
         let renderEncoderOpt = commandBuffer.renderCommandEncoderWithDescriptor(renderPassDescriptor)
         if let renderEncoder: MTLRenderCommandEncoder = renderEncoderOpt {
+            renderEncoder.setCullMode(MTLCullMode.Front)
             renderEncoder.setRenderPipelineState(pipelineState)
             renderEncoder.setVertexBuffer(vertexBuffer, offset: 0, atIndex: 0)
 
