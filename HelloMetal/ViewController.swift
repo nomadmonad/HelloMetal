@@ -5,15 +5,12 @@ import QuartzCore
 class ViewController: UIViewController {
     var device: MTLDevice! = nil
     var metalLayer: CAMetalLayer! = nil
-    var vertexBuffer: MTLBuffer! = nil
+
     var pipelineState: MTLRenderPipelineState! = nil
     var commandQueue: MTLCommandQueue! = nil
     var timer: CADisplayLink! = nil
+    var objectToDraw: Triangle! = nil
     
-    let vertexData:[Float] = [
-        0.0, 1.0, 0.0,
-        -1.0, -1.0, 0.0,
-        1.0, -1.0, 0.0]
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -25,8 +22,7 @@ class ViewController: UIViewController {
         metalLayer.frame = view.layer.frame
         view.layer.addSublayer(metalLayer)
         
-        let dataSize = vertexData.count * sizeofValue(vertexData[0])
-        vertexBuffer = device.newBufferWithBytes(vertexData, length: dataSize, options: MTLResourceOptions.CPUCacheModeDefaultCache)
+        objectToDraw = Triangle(device: device)
         
         let defaultLibrary = device.newDefaultLibrary()
         let fragmentProgram = defaultLibrary!.newFunctionWithName("basic_fragment")
@@ -54,22 +50,7 @@ class ViewController: UIViewController {
     func render() {
         let drawable: CAMetalDrawable? = metalLayer.nextDrawable()
         
-        let renderPassDescriptor = MTLRenderPassDescriptor()
-        renderPassDescriptor.colorAttachments[0].texture = drawable!.texture
-        renderPassDescriptor.colorAttachments[0].loadAction = .Clear
-        renderPassDescriptor.colorAttachments[0].clearColor = MTLClearColorMake(0.0, 104.0/255.0, 5.0/255.0, 1.0)
-        
-        let commandBuffer = commandQueue.commandBuffer()
-        let renderEncoderOpt = commandBuffer.renderCommandEncoderWithDescriptor(renderPassDescriptor)
-        if let renderEncoder: MTLRenderCommandEncoder = renderEncoderOpt {
-            renderEncoder.setRenderPipelineState(pipelineState)
-            renderEncoder.setVertexBuffer(vertexBuffer, offset: 0, atIndex:0)
-            renderEncoder.drawPrimitives(.Triangle, vertexStart: 0, vertexCount: 3, instanceCount: 1)
-            renderEncoder.endEncoding()
-        }
-        
-        commandBuffer.presentDrawable(drawable!)
-        commandBuffer.commit()
+        objectToDraw.render(commandQueue, pipelineState: pipelineState, drawable: drawable!, clearColor: nil)
     }
     
     func gameloop() {
