@@ -10,7 +10,6 @@
 		8D266FAA1C605FD30056453E /* Vertex.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D266FA91C605FD30056453E /* Vertex.swift */; };
 		8D266FAC1C6060240056453E /* Node.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D266FAB1C6060240056453E /* Node.swift */; };
 		8D58B0841C61791100793007 /* Triangle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D58B0831C61791100793007 /* Triangle.swift */; };
-		8D675ECC1C59FB67006C02D6 /* StaticVarReference.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8D675ECB1C59FB67006C02D6 /* StaticVarReference.swift */; };
 		8DB2209B1C5F0ED600AD8859 /* Matrix4.m in Sources */ = {isa = PBXBuildFile; fileRef = 8DB2209A1C5F0ED600AD8859 /* Matrix4.m */; };
 		8DFBC5431C58BFC300B110A9 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DFBC5421C58BFC300B110A9 /* AppDelegate.swift */; };
 		8DFBC5451C58BFC300B110A9 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 8DFBC5441C58BFC300B110A9 /* ViewController.swift */; };
@@ -25,7 +24,6 @@
 		8D266FA91C605FD30056453E /* Vertex.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vertex.swift; sourceTree = "<group>"; };
 		8D266FAB1C6060240056453E /* Node.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Node.swift; sourceTree = "<group>"; };
 		8D58B0831C61791100793007 /* Triangle.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Triangle.swift; sourceTree = "<group>"; };
-		8D675ECB1C59FB67006C02D6 /* StaticVarReference.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StaticVarReference.swift; sourceTree = "<group>"; };
 		8DB220981C5F0ED600AD8859 /* HelloMetal-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "HelloMetal-Bridging-Header.h"; sourceTree = "<group>"; };
 		8DB220991C5F0ED600AD8859 /* Matrix4.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Matrix4.h; sourceTree = "<group>"; };
 		8DB2209A1C5F0ED600AD8859 /* Matrix4.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Matrix4.m; sourceTree = "<group>"; };
@@ -81,7 +79,6 @@
 				8DFBC54B1C58BFC300B110A9 /* LaunchScreen.storyboard */,
 				8DFBC54E1C58BFC300B110A9 /* Info.plist */,
 				8DFBC5561C58C29F00B110A9 /* Shaders.metal */,
-				8D675ECB1C59FB67006C02D6 /* StaticVarReference.swift */,
 				8DB220981C5F0ED600AD8859 /* HelloMetal-Bridging-Header.h */,
 				8D266FA91C605FD30056453E /* Vertex.swift */,
 				8D266FAB1C6060240056453E /* Node.swift */,
@@ -165,7 +162,6 @@
 				8DB2209B1C5F0ED600AD8859 /* Matrix4.m in Sources */,
 				8DFBC5451C58BFC300B110A9 /* ViewController.swift in Sources */,
 				8DFBC5431C58BFC300B110A9 /* AppDelegate.swift in Sources */,
-				8D675ECC1C59FB67006C02D6 /* StaticVarReference.swift in Sources */,
 				8D266FAA1C605FD30056453E /* Vertex.swift in Sources */,
 				8D266FAC1C6060240056453E /* Node.swift in Sources */,
 				8D58B0841C61791100793007 /* Triangle.swift in Sources */,
