@@ -2,18 +2,21 @@ import UIKit
 import MetalKit
 import QuartzCore
 
-class ViewController: UIViewController {
+protocol MetalViewControllerDelegate : class{
+    func updateLogic(timeSinceLastUpdate:CFTimeInterval)
+    func renderObjects(drawable:CAMetalDrawable)
+}
+
+class MetalViewController: UIViewController {
     var device: MTLDevice! = nil
     var metalLayer: CAMetalLayer! = nil
-
     var pipelineState: MTLRenderPipelineState! = nil
     var commandQueue: MTLCommandQueue! = nil
     var timer: CADisplayLink! = nil
-    var objectToDraw: Cube! = nil
-
     var projectionMatrix: Matrix4!
-
     var lastFrameTimestamp: CFTimeInterval = 0.0
+    
+    weak var metalViewControllerDelegate: MetalViewControllerDelegate?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,42 +30,39 @@ class ViewController: UIViewController {
         metalLayer.framebufferOnly = true
         metalLayer.frame = view.layer.frame
         view.layer.addSublayer(metalLayer)
-        
-        objectToDraw = Cube(device: device)
-        
+
         let defaultLibrary = device.newDefaultLibrary()
         let fragmentProgram = defaultLibrary!.newFunctionWithName("basic_fragment")
         let vertexProgram = defaultLibrary!.newFunctionWithName("basic_vertex")
-        
+
         let pipelineStateDescriptor = MTLRenderPipelineDescriptor()
         pipelineStateDescriptor.vertexFunction = vertexProgram
         pipelineStateDescriptor.fragmentFunction = fragmentProgram
         pipelineStateDescriptor.colorAttachments[0].pixelFormat = .BGRA8Unorm
-        
+        pipelineStateDescriptor.colorAttachments[0].blendingEnabled = true
+        pipelineStateDescriptor.colorAttachments[0].rgbBlendOperation = MTLBlendOperation.Add;
+        pipelineStateDescriptor.colorAttachments[0].alphaBlendOperation = MTLBlendOperation.Add;
+        pipelineStateDescriptor.colorAttachments[0].sourceRGBBlendFactor = MTLBlendFactor.One;
+        pipelineStateDescriptor.colorAttachments[0].sourceAlphaBlendFactor = MTLBlendFactor.One;
+        pipelineStateDescriptor.colorAttachments[0].destinationRGBBlendFactor = MTLBlendFactor.OneMinusSourceAlpha;
+        pipelineStateDescriptor.colorAttachments[0].destinationAlphaBlendFactor = MTLBlendFactor.OneMinusSourceAlpha;
+
         try! self.pipelineState = self.device.newRenderPipelineStateWithDescriptor(pipelineStateDescriptor)
-        
+
         commandQueue = device.newCommandQueue()
 
         timer = CADisplayLink(target: self, selector: Selector("newFrame:"))
         timer.addToRunLoop(NSRunLoop.mainRunLoop(), forMode: NSDefaultRunLoopMode)        
     }
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-
     func render() {
-        let drawable: CAMetalDrawable? = metalLayer.nextDrawable()
-        
-        let worldModelMatrix = Matrix4()
-        worldModelMatrix.translate(0.0, y: 0.0, z: -7.0)
-        objectToDraw.render(commandQueue, pipelineState: pipelineState, drawable: drawable!, parentModelViewMatrix: worldModelMatrix, projectionMatrix: projectionMatrix, clearColor: nil)
+        if let drawable = metalLayer.nextDrawable() {
+            self.metalViewControllerDelegate?.renderObjects(drawable)
+        }
     }
-    
+
     func gameloop(timeSinceLastUpdate: CFTimeInterval) {
-        objectToDraw.updateWithDelta(timeSinceLastUpdate)
+        self.metalViewControllerDelegate?.updateLogic(timeSinceLastUpdate)
         autoreleasepool {
             self.render()
         }
@@ -72,10 +72,10 @@ class ViewController: UIViewController {
         if lastFrameTimestamp == 0.0 {
             lastFrameTimestamp = displayLink.timestamp
         }
-        
+
         let elapsed: CFTimeInterval = displayLink.timestamp - lastFrameTimestamp
         lastFrameTimestamp = displayLink.timestamp
-        
+
         gameloop(elapsed)
     }
 }
