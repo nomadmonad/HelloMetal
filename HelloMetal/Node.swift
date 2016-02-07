@@ -5,6 +5,7 @@ import QuartzCore
 class Node {
     let name: String
     var vertexCount: Int
+    var bufferProvider: BufferProvider
     var vertexBuffer: MTLBuffer
     var uniformBuffer: MTLBuffer?
     var device: MTLDevice
@@ -32,9 +33,12 @@ class Node {
         self.name = name
         self.device = device
         self.vertexCount = vertices.count
+        
+        self.bufferProvider = BufferProvider(device: device, inflightBuffersCount: 3, sizeOfUniformsBuffer: sizeof(Float) * Matrix4.numberOfElements() * 2)
     }
     
     func render(commandQueue: MTLCommandQueue, pipelineState: MTLRenderPipelineState, drawable: CAMetalDrawable, parentModelViewMatrix: Matrix4, projectionMatrix: Matrix4, clearColor: MTLClearColor?) {
+        dispatch_semaphore_wait(bufferProvider.availableResourcesSemaphore, DISPATCH_TIME_FOREVER)
         
         let renderPassDescriptor = MTLRenderPassDescriptor()
         renderPassDescriptor.colorAttachments[0].texture = drawable.texture
@@ -43,6 +47,9 @@ class Node {
         renderPassDescriptor.colorAttachments[0].storeAction = .Store
         
         let commandBuffer = commandQueue.commandBuffer()
+        commandBuffer.addCompletedHandler({(commandBuffer) -> Void in
+            dispatch_semaphore_signal(self.bufferProvider.availableResourcesSemaphore)
+        })
         
         let renderEncoderOpt = commandBuffer.renderCommandEncoderWithDescriptor(renderPassDescriptor)
         if let renderEncoder: MTLRenderCommandEncoder = renderEncoderOpt {
@@ -52,10 +59,7 @@ class Node {
 
             let nodeModelMatrix = self.modelMatrix()
             nodeModelMatrix.multiplyLeft(parentModelViewMatrix)
-            uniformBuffer = device.newBufferWithLength(sizeof(Float) * Matrix4.numberOfElements() * 2, options: MTLResourceOptions.CPUCacheModeDefaultCache)
-            let bufferPointer = uniformBuffer?.contents()
-            memcpy(bufferPointer!, nodeModelMatrix.raw(), sizeof(Float) * Matrix4.numberOfElements())
-            memcpy(bufferPointer! + sizeof(Float) * Matrix4.numberOfElements(), projectionMatrix.raw(), sizeof(Float) * Matrix4.numberOfElements())
+            uniformBuffer = bufferProvider.nextUniformsBuffer(projectionMatrix, modelViewMatrix: nodeModelMatrix)
             renderEncoder.setVertexBuffer(self.uniformBuffer, offset: 0, atIndex: 1)
             
             renderEncoder.drawPrimitives(.Triangle, vertexStart: 0, vertexCount: vertexCount, instanceCount: vertexCount/3)
