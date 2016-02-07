@@ -4,11 +4,13 @@ using namespace metal;
 struct VertexIn {
     packed_float3 position;
     packed_float4 color;
+    packed_float2 texCoord;
 };
 
 struct VertexOut {
     float4 position[[position]];
     float4 color;
+    float2 texCoord;
 };
 
 struct Uniforms {
@@ -26,9 +28,13 @@ vertex VertexOut basic_vertex(const device VertexIn* vertex_array [[ buffer(0) ]
     VertexOut vertexOut;
     vertexOut.position = proj_matrix * mv_matrix * float4(vertexIn.position, 1);
     vertexOut.color = vertexIn.color;
+    vertexOut.texCoord = vertexIn.texCoord;
     return vertexOut;
 }
 
-fragment half4 basic_fragment(VertexOut interpolated [[stage_in]]) {
-    return half4(interpolated.color[0], interpolated.color[1], interpolated.color[2], interpolated.color[3]);
+fragment float4 basic_fragment(VertexOut interpolated [[stage_in]],
+                              texture2d<float> tex2d [[texture(0)]],
+                              sampler sampler2d [[sampler(0)]]) {
+    float4 color = tex2d.sample(sampler2d, interpolated.texCoord);
+    return color;
 }
